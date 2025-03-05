@@ -25,4 +25,12 @@ coxa = st.number_input("Circunferência da Coxa (cm)", min_value=0.0, format="%.
 antebraco = st.number_input("Circunferência do Antebraço (cm)", min_value=0.0, format="%.2f")
 panturrilha = st.number_input("Circunferência da Panturrilha (cm)", min_value=0.0, format="%.2f")
 braco_superior = st.number_input("Circunferência do Braço Superior (cm)", min_value=0.0, format="%.2f")
-nadegas = st.num
+nadegas = st.number_input("Circunferência das Nádegas (cm)", min_value=0.0, format="%.2f")
+
+# Botão para calcular
+if st.button("Calcular % de Gordura Corporal"):
+    resultado = calcular_gordura(sexo, idade, abdominal, coxa, antebraco, panturrilha, braco_superior, nadegas)
+    try:
+        st.success(f"Percentual estimado de gordura corporal: {resultado:.2f}%")
+    except Exception as e:
+        st.error(f"Erro: {resultado}")
