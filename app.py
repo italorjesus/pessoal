@@ -28,6 +28,6 @@ braco_superior = st.number_input("Circunferência do Braço Superior (cm)", min_
 nadegas = st.number_input("Circunferência das Nádegas (cm)", min_value=0.0, format="%.2f")
 
 # Botão para calcular
-if st.button("Calcular % de Gordura Corporal"):
+  if st.button("Calcular % de Gordura Corporal"):
 resultado = calcular_gordura(sexo, idade, abdominal, coxa, antebraco, panturrilha, braco_superior, nadegas)
 st.success(f"Percentual estimado de gordura corporal: {resultado:.2f}%")
