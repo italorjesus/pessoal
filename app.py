@@ -1,47 +1,33 @@
 import streamlit as st
-import math
 
-st.title("Calculadora de Percentual de Gordura Corporal")
+def calcular_gordura(sexo, idade, abdominal, coxa, antebraco, panturrilha, braco_superior, nadegas):
+if sexo == "Feminino":
+if idade <= 26:
+return (abdominal * 0.5276) + (coxa * 0.8184) - (antebraco * 1.6967) - 19.6
+else:
+return (abdominal * 0.4682) + (coxa * 0.4886) - (panturrilha * 0.5703) - 18.4
+elif sexo == "Masculino":
+if idade <= 26:
+return (braco_superior * 1.4564) + (abdominal * 0.5157) - (antebraco * 2.1382) - 10.2
+else:
+return (nadegas * 0.4147) + (abdominal * 0.3558) - (antebraco * 1.1814) - 15.0
+else:
+return "Erro: Sexo inválido"
 
-st.markdown("""
-Esta aplicação calcula o percentual de gordura com base na fórmula da Marinha dos EUA.  
-**Para homens:**  
-&nbsp;&nbsp;&nbsp;&nbsp;BF% = 495 / (1.0324 - 0.19077 * log10(cintura - pescoço) + 0.15456 * log10(altura)) - 450  
+# Interface Streamlit
+st.title("Calculadora de Gordura Corporal")
 
-**Para mulheres:**  
-&nbsp;&nbsp;&nbsp;&nbsp;BF% = 495 / (1.29579 - 0.35004 * log10(cintura + quadril - pescoço) + 0.22100 * log10(altura)) - 450  
-
-> *Observação:* Certifique-se de informar as medidas em centímetros e que os valores informados façam sentido (por exemplo, cintura > pescoço para homens e cintura + quadril > pescoço para mulheres).
-""")
-
-# Entrada de dados
-gender = st.selectbox("Selecione o sexo:", ["Masculino", "Feminino"])
-height = st.number_input("Altura (cm):", min_value=0.0, format="%.2f")
-neck = st.number_input("Circunferência do pescoço (cm):", min_value=0.0, format="%.2f")
-waist = st.number_input("Circunferência da cintura (cm):", min_value=0.0, format="%.2f")
-
-if gender == "Feminino":
-    hip = st.number_input("Circunferência do quadril (cm):", min_value=0.0, format="%.2f")
+# Entradas do usuário
+sexo = st.selectbox("Selecione o sexo", ["Masculino", "Feminino"])
+idade = st.number_input("Idade", min_value=1, step=1)
+abdominal = st.number_input("Circunferência Abdominal (cm)", min_value=0.0, format="%.2f")
+coxa = st.number_input("Circunferência da Coxa (cm)", min_value=0.0, format="%.2f")
+antebraco = st.number_input("Circunferência do Antebraço (cm)", min_value=0.0, format="%.2f")
+panturrilha = st.number_input("Circunferência da Panturrilha (cm)", min_value=0.0, format="%.2f")
+braco_superior = st.number_input("Circunferência do Braço Superior (cm)", min_value=0.0, format="%.2f")
+nadegas = st.number_input("Circunferência das Nádegas (cm)", min_value=0.0, format="%.2f")
 
 # Botão para calcular
-if st.button("Calcular"):
-    if height <= 0:
-        st.error("A altura deve ser maior que zero.")
-    else:
-        try:
-            if gender == "Masculino":
-                # Verifica se cintura - pescoço é positivo
-                if waist <= neck:
-                    st.error("Para homens, a medida da cintura deve ser maior que a do pescoço.")
-                else:
-                    resultado = 495 / (1.0324 - 0.19077 * math.log10(waist - neck) + 0.15456 * math.log10(height)) - 450
-                    st.success(f"Percentual de Gordura: {resultado:.2f}%")
-            else:
-                # Verifica se (cintura + quadril) - pescoço é positivo
-                if (waist + hip) <= neck:
-                    st.error("Para mulheres, a soma da cintura e quadril deve ser maior que a do pescoço.")
-                else:
-                    resultado = 495 / (1.29579 - 0.35004 * math.log10(waist + hip - neck) + 0.22100 * math.log10(height)) - 450
-                    st.success(f"Percentual de Gordura: {resultado:.2f}%")
-        except Exception as e:
-            st.error(f"Ocorreu um erro: {e}")
+if st.button("Calcular % de Gordura Corporal"):
+resultado = calcular_gordura(sexo, idade, abdominal, coxa, antebraco, panturrilha, braco_superior, nadegas)
+st.success(f"Percentual estimado de gordura corporal: {resultado:.2f}%")
