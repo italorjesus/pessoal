@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Cálculo da Fórmula</title>
+  <script>
+    function calcular() {
+      let D10 = parseFloat(document.getElementById("D10").value);
+      let D11 = parseFloat(document.getElementById("D11").value);
+      let D13 = parseFloat(document.getElementById("D13").value);
+      let D8 = document.getElementById("D8").value;
+      let D9 = parseFloat(document.getElementById("D9").value);
+      let resultado;
+
+      if (D8 === "Feminino" && D9 > 26) {
+        resultado = (D10 * 0.4682) + (D11 * 0.4886) - (D13 * 0.5703) - 18.4;
+      } else if (D8 === "Masculino" && D9 > 26) {
+        resultado = (D10 * 0.4147) + (D11 * 0.3558) - (D13 * 1.1814) - 15;
+      } else if (D8 === "Feminino" && D9 <= 26) {
+        resultado = (D10 * 0.5276) + (D11 * 0.8184) - (D13 * 1.6967) - 19.6;
+      } else if (D8 === "Masculino" && D9 <= 26) {
+        resultado = (D10 * 1.4564) + (D11 * 0.5157) - (D13 * 2.1382) - 10.2;
+      } else {
+        resultado = "Dados inválidos";
+      }
+
+      document.getElementById("resultado").innerText = resultado / 100;
+    }
+  </script>
+</head>
+<body>
+  <h2>Cálculo da Fórmula</h2>
+  <form>
+    <label>Sexo (Feminino/Masculino):</label><br>
+    <input type="text" id="D8"><br><br>
+    <label>Idade:</label><br>
+    <input type="number" id="D9"><br><br>
+    <label>Valor D10:</label><br>
+    <input type="number" id="D10"><br><br>
+    <label>Valor D11:</label><br>
+    <input type="number" id="D11"><br><br>
+    <label>Valor D13:</label><br>
+    <input type="number" id="D13"><br><br>
+    <input type="button" value="Calcular" onclick="calcular()">
+  </form>
+  <h3>Resultado: <span id="resultado"></span></h3>
+</body>
+</html>
