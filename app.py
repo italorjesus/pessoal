@@ -3,14 +3,14 @@ import streamlit as st
 def calcular_gordura(sexo, idade, abdominal, coxa, antebraco, panturrilha, braco_superior, nadegas):
     if sexo == "Feminino":
         if idade <= 26:
-            return (abdominal * 0.5276) + (coxa * 0.8184) - (antebraco * 1.6967) - 19.6
+            return (abdominal * 0.5276) + (coxa * 0.8184) - (antebraco * 1.6967) - 14.6
         else:
-            return (abdominal * 0.4682) + (coxa * 0.4886) - (panturrilha * 0.5703) - 18.4
+            return (abdominal * 0.4682) + (coxa * 0.4886) - (panturrilha * 0.5703) - 13.4
     elif sexo == "Masculino":
         if idade <= 26:
-            return (braco_superior * 1.4564) + (abdominal * 0.5157) - (antebraco * 2.1382) - 10.2
+            return (braco_superior * 1.4564) + (abdominal * 0.5157) - (antebraco * 2.1382) - 5.2
         else:
-            return (nadegas * 0.4147) + (abdominal * 0.3558) - (antebraco * 1.1814) - 15.0
+            return (nadegas * 0.4147) + (abdominal * 0.3558) - (antebraco * 1.1814) - 10.0
     else:
         return "Erro: Sexo inválido"
 
