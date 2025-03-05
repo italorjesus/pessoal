@@ -29,5 +29,5 @@ nadegas = st.number_input("Circunferência das Nádegas (cm)", min_value=0.0, fo
 
 # Botão para calcular
   if st.button("Calcular % de Gordura Corporal"):
-resultado = calcular_gordura(sexo, idade, abdominal, coxa, antebraco, panturrilha, braco_superior, nadegas)
-st.success(f"Percentual estimado de gordura corporal: {resultado:.2f}%")
+    resultado = calcular_gordura(sexo, idade, abdominal, coxa, antebraco, panturrilha, braco_superior, nadegas)
+    st.success(f"Percentual estimado de gordura corporal: {resultado:.2f}%")
