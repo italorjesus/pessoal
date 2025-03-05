@@ -1,26 +1,47 @@
 import streamlit as st
+import math
 
-# Título da página
-st.title("Calculadora de Fórmula")
+st.title("Calculadora de Percentual de Gordura Corporal")
 
-# Inputs dos dados
-sexo = st.selectbox("Sexo", ["Feminino", "Masculino"])
-idade = st.number_input("Idade", min_value=0, max_value=150, value=30)
-D10 = st.number_input("Valor D10", min_value=0.0, value=78.0)
-D11 = st.number_input("Valor D11", min_value=0.0, value=48.0)
-D13 = st.number_input("Valor D13", min_value=0.0, value=34.0)
+st.markdown("""
+Esta aplicação calcula o percentual de gordura com base na fórmula da Marinha dos EUA.  
+**Para homens:**  
+&nbsp;&nbsp;&nbsp;&nbsp;BF% = 495 / (1.0324 - 0.19077 * log10(cintura - pescoço) + 0.15456 * log10(altura)) - 450  
 
-# Lógica da fórmula
-if sexo == "Feminino" and idade > 26:
-    resultado = (D10 * 0.4682) + (D11 * 0.4886) - (D13 * 0.5703) - 18.4
-elif sexo == "Masculino" and idade > 26:
-    resultado = (D10 * 0.4147) + (D11 * 0.3558) - (D13 * 1.1814) - 15
-elif sexo == "Feminino" and idade <= 26:
-    resultado = (D10 * 0.5276) + (D11 * 0.8184) - (D13 * 1.6967) - 19.6
-elif sexo == "Masculino" and idade <= 26:
-    resultado = (D10 * 1.4564) + (D11 * 0.5157) - (D13 * 2.1382) - 10.2
-else:
-    resultado = "Dados inválidos"
+**Para mulheres:**  
+&nbsp;&nbsp;&nbsp;&nbsp;BF% = 495 / (1.29579 - 0.35004 * log10(cintura + quadril - pescoço) + 0.22100 * log10(altura)) - 450  
 
-# Exibir o resultado
-st.write("Resultado:", resultado / 100)
+> *Observação:* Certifique-se de informar as medidas em centímetros e que os valores informados façam sentido (por exemplo, cintura > pescoço para homens e cintura + quadril > pescoço para mulheres).
+""")
+
+# Entrada de dados
+gender = st.selectbox("Selecione o sexo:", ["Masculino", "Feminino"])
+height = st.number_input("Altura (cm):", min_value=0.0, format="%.2f")
+neck = st.number_input("Circunferência do pescoço (cm):", min_value=0.0, format="%.2f")
+waist = st.number_input("Circunferência da cintura (cm):", min_value=0.0, format="%.2f")
+
+if gender == "Feminino":
+    hip = st.number_input("Circunferência do quadril (cm):", min_value=0.0, format="%.2f")
+
+# Botão para calcular
+if st.button("Calcular"):
+    if height <= 0:
+        st.error("A altura deve ser maior que zero.")
+    else:
+        try:
+            if gender == "Masculino":
+                # Verifica se cintura - pescoço é positivo
+                if waist <= neck:
+                    st.error("Para homens, a medida da cintura deve ser maior que a do pescoço.")
+                else:
+                    resultado = 495 / (1.0324 - 0.19077 * math.log10(waist - neck) + 0.15456 * math.log10(height)) - 450
+                    st.success(f"Percentual de Gordura: {resultado:.2f}%")
+            else:
+                # Verifica se (cintura + quadril) - pescoço é positivo
+                if (waist + hip) <= neck:
+                    st.error("Para mulheres, a soma da cintura e quadril deve ser maior que a do pescoço.")
+                else:
+                    resultado = 495 / (1.29579 - 0.35004 * math.log10(waist + hip - neck) + 0.22100 * math.log10(height)) - 450
+                    st.success(f"Percentual de Gordura: {resultado:.2f}%")
+        except Exception as e:
+            st.error(f"Ocorreu um erro: {e}")
