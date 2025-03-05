@@ -15,7 +15,7 @@ def calcular_gordura(sexo, idade, abdominal, coxa, antebraco, panturrilha, braco
         return "Erro: Sexo inválido"
 
 # Interface Streamlit
-st.title("Calculadora de Gordura Corporal\nMani Personal")
+st.title("Calculadora de Gordura Corporal - Mani Personal")
 
 # Entradas do usuário
 sexo = st.selectbox("Selecione o sexo", ["Masculino", "Feminino"])
